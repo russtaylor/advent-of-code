@@ -1,37 +1,37 @@
 package day1
 
 import (
+	"advent-of-code/utils"
 	"bufio"
 	"fmt"
 	"os"
-	"sort"
 	"strconv"
 )
 
 func Part1() {
 	fileName := "./day-1/full-data.txt"
 
-	slices := readFileToSlices(fileName)
-	subSlices := sumSubslices(slices)
+	slices := ReadDay1FileToSlices(fileName)
+	subSlices := utils.SumSubslices(slices)
 
-	max := findMax(subSlices)
+	max := utils.FindMax(subSlices)
 	fmt.Printf("Largest sub slice: %v\n", max)
 }
 
 func Part2() {
 	fileName := "./day-1/full-data.txt"
 
-	slices := readFileToSlices(fileName)
-	subSlices := sumSubslices(slices)
+	slices := ReadDay1FileToSlices(fileName)
+	subSlices := utils.SumSubslices(slices)
 
-	sorted := sortSliceDesc(subSlices)
+	sorted := utils.SortSliceDesc(subSlices)
 	first3 := sorted[0:3]
-	sumFirst3 := sumSlice(first3)
+	sumFirst3 := utils.SumSlice(first3)
 
 	fmt.Printf("Sum of 3 biggest subslices: %v\n", sumFirst3)
 }
 
-func readFileToSlices(filename string) [][]int {
+func ReadDay1FileToSlices(filename string) [][]int {
 	file, err := os.Open(filename)
 	if err != nil {
 		panic(err)
@@ -57,37 +57,4 @@ func readFileToSlices(filename string) [][]int {
 	elements = append(elements, currentElement)
 
 	return elements
-}
-
-func sumSlice(slice []int) int {
-	result := 0
-	for _, value := range slice {
-		result += value
-	}
-	return result
-}
-
-func findMax(slice []int) int {
-	max := 0
-	for _, value := range slice {
-		if value > max {
-			max = value
-		}
-	}
-	return max
-}
-
-func sumSubslices(slice [][]int) []int {
-	var result []int
-	for _, value := range slice {
-		result = append(result, sumSlice(value))
-	}
-	return result
-}
-
-func sortSliceDesc(slice []int) []int {
-	sort.Slice(slice, func(i, j int) bool {
-		return slice[i] > slice[j]
-	})
-	return slice
 }

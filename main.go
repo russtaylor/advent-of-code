@@ -2,6 +2,7 @@ package main
 
 import (
 	"advent-of-code/day-1"
+	day2 "advent-of-code/day-2"
 	"fmt"
 	"os"
 	"strconv"
@@ -19,6 +20,13 @@ func main() {
 			day1.Part1()
 		case 2:
 			day1.Part2()
+		}
+	case 2:
+		switch part {
+		case 1:
+			day2.Part1()
+		case 2:
+			day2.Part2()
 		}
 	}
 }
