@@ -28,5 +28,5 @@ func main() {
 		case 2:
 			day2.Part2()
 		}
-	}
+	} // Okay, now I'm switching away from Go for now.
 }

@@ -17,7 +17,7 @@ func TestScoreRPSFile(t *testing.T) {
 
 func TestScoreRPSRound(t *testing.T) {
 	scenarios := []struct {
-		input string
+		input    string
 		expected int
 	}{
 		{"A Y", 8},
@@ -34,47 +34,48 @@ func TestScoreRPSRound(t *testing.T) {
 	}
 }
 
-// Test scenarios in which the contestant wins
-func TestPlayRPSRoundWinScenarios(t *testing.T) {
-	scenarios := [][]string{
-		{"A", "Y"},
-		{"B", "Z"},
-		{"C", "X"},
+// Test scenarios!
+func TestPlayRPSRoundScenarios(t *testing.T) {
+	scenarios := []struct {
+		elfPlay       string
+		myPlay        string
+		expectedScore int
+	}{
+		{"A", "X", 3},
+		{"A", "Y", 6},
+		{"A", "Z", 0},
+		{"B", "X", 0},
+		{"B", "Y", 3},
+		{"B", "Z", 6},
+		{"C", "X", 6},
+		{"C", "Y", 0},
+		{"C", "Z", 3},
 	}
 
-	expected := 6 // A 'win' counts for 6 points
 	for _, scenario := range scenarios {
-		result := PlayRPSRound(scenario[0], scenario[1])
-		assert.Equal(t, expected, result)
+		testName := fmt.Sprintf("%v_%v", scenario.elfPlay, scenario.myPlay)
+		t.Run(testName, func(t *testing.T) {
+			result := PlayRPSRound(scenario.elfPlay, scenario.myPlay)
+			assert.Equal(t, scenario.expectedScore, result)
+		})
 	}
 }
 
-// Test scenarios which result in a draw
-func TestPlayRPSRoundDrawScenarios(t *testing.T) {
-	scenarios := [][]string{
-		{"A", "X"},
-		{"B", "Y"},
-		{"C", "Z"},
+func TestScoreRoundPart2(t *testing.T) {
+	scenarios := []struct {
+		input    string
+		expected int
+	}{
+		{"A Y", 4},
+		{"B X", 1},
+		{"C Z", 7},
 	}
 
-	expected := 3 // A 'draw' counts for 3 points
 	for _, scenario := range scenarios {
-		result := PlayRPSRound(scenario[0], scenario[1])
-		assert.Equal(t, expected, result)
-	}
-}
-
-// Test scenarios which result in a loss
-func TestPlayRPSRoundLossScenarios(t *testing.T) {
-	scenarios := [][]string{
-		{"A", "Z"},
-		{"B", "X"},
-		{"C", "Y"},
-	}
-
-	expected := 0 // A 'loss' counts for 3 points
-	for _, scenario := range scenarios {
-		result := PlayRPSRound(scenario[0], scenario[1])
-		assert.Equal(t, expected, result)
+		testName := fmt.Sprintf("%v", scenario.input)
+		t.Run(testName, func(t *testing.T) {
+			result := ScoreRoundPart2(scenario.input)
+			assert.Equal(t, scenario.expected, result)
+		})
 	}
 }
